@@ -19,7 +19,7 @@ def get_all_data_from_operations():
 def get_datetime_from_operations_date(get_all_data_from_operations):
     """Получение даты в виде строки и приведение ее в формат datetime"""
     datetime_list = []
-    for dicts_ in get_all_data_from_operations():
+    for dicts_ in get_all_data_from_operations:
         if 'date' in dicts_:
             date_time_str = dicts_["date"]
             date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S.%f')
@@ -30,7 +30,7 @@ def get_datetime_from_operations_date(get_all_data_from_operations):
     return datetime_list
 
 
-def sorted_operations_date():
+def sorted_operations_date(get_all_data_from_operations):
     """Получает даты последних 5 операций в формате datetime"""
     sorted_date_dttm_list = sorted(get_datetime_from_operations_date(get_all_data_from_operations), reverse=True)
     return sorted_date_dttm_list[:5]
@@ -38,11 +38,11 @@ def sorted_operations_date():
 def get_need_data_from_operations(get_all_data_from_operations):
     """Получает список словарей с информацией о последних 5 операциях"""
     need_data_dict_list = []
-    for dict_ in get_all_data_from_operations():
+    for dict_ in get_all_data_from_operations:
         if 'date' in dict_:
             date_time_str = dict_["date"]
             date_time_obj = datetime.strptime(date_time_str, '%Y-%m-%dT%H:%M:%S.%f')
-            for item in sorted_operations_date():
+            for item in sorted_operations_date(get_all_data_from_operations):
                 if item == date_time_obj:
             #
             # if date_time_obj in sorted_operations_date():
@@ -138,7 +138,7 @@ def get_amount_and_cur_name_from_operations_for_transformation(dicts_):
 
 
 def get_five_last_operations():
-    for i in get_need_data_from_operations(get_all_data_from_operations):
+    for i in get_need_data_from_operations(get_all_data_from_operations()):
         print(f"""{get_datetime_from_operations_date_for_conversion(i)}  
 {get_from_from_operations_for_transformation(i)} {get_to_from_operations_for_transformation(i)}
 {get_amount_and_cur_name_from_operations_for_transformation(i)} \n """)
